@@ -1,0 +1,39 @@
+SingleTest
+==========
+Run specific testcase/tests or spec/example.
+
+Testing a single spec, a single test, a single testcase or a single example 
+is a great timesaver when debugging a small problem while having a large 
+testsuite, or a testsuite with a lot of failures…
+
+Looks for a file with the name you specified: name or subfolder/name ...
+Will search the root folder first(/controllers) and then all subfolders(/controllers/admin)
+
+
+
+Example
+=======
+test: search in test/ unit functional integration
+spec: search in spec/ models controllers views helpers
+
+rake test:blog
+=> Runs the full BlogTest unit test
+
+rake test:blog:create
+=> Runs the tests matching /create/ in the BlogTest unit test
+
+rake spec:blog:create
+=> Runs the first example matching /create/ in Blog spec
+
+rake test:u
+=> run the first file matching u*_test.rb
+
+rake test:blog_C or test:blog_
+=> Runs all tests in the BlogControllerTest functional test
+
+rake test:bl or test:blog_
+=> Run the first Test matching bl*_test.rb
+
+
+
+Copyright (c) 2008 Michael Grosser, released under the MIT license
