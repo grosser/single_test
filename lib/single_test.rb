@@ -7,7 +7,7 @@ module SingleTest
   }
 
   def run_from_cli(call)
-    type, file, name = parse_cli(call)
+    type, file, test_name = parse_cli(call)
     file = find_test_file(type,file)
     return unless file
 
@@ -15,10 +15,11 @@ module SingleTest
     test_name = find_example_in_spec(file,test_name) if type == 'spec' && test_name
 
     #run the file
+    puts "running: #{file}"
     case type
     when 'test' then sh "ruby -Ilib:test #{file} -n /#{test_name}/"
-    when 'spec' then sh "spec -O spec/spec.opts #{file}" + \
-      (test_name.empty? ? "":" -e '#{test_name}'")
+    when 'spec' then sh "spec -O spec/spec.opts #{file}" + (test_name ? " -e '#{test_name}'" : '')
+    else raise "Unknown: #{type}"
     end
   end
 
@@ -34,29 +35,22 @@ module SingleTest
   end
 
   def find_test_file(type,file_name)
-    file = nil
     ["","**/"].each do |depth| #find in lower folders first
       SEARCH_ORDER[type].each do |folder|
         base = "#{RAILS_ROOT}/#{type}/#{folder}/#{depth}#{file_name}"
         #?rb -> if used without a wildcard the search would always contain
         #even a non-existing file
         #search for user_spec.rb before finding user_admin_spec.rb
-        (FileList["#{base}_#{type}?rb"] + FileList["#{base}*_#{type}.rb"]).each do |found|
-          file = found
-          break
-        end
-        break if file
+        found = (FileList["#{base}_#{type}?rb"] + FileList["#{base}*_#{type}.rb"])
+        return found.first unless found.empty?
       end
     end
-    file
   end
 
   def find_example_in_spec(file, test_name)
     File.readlines(file).each do |line|
-      if line =~ /.*it\s*(["'])(.*#{test_name}.*)\1\s*do/
-        return $2
-      end
+      return $2 if line =~ /.*it\s*(["'])(.*#{test_name}.*)\1\s*do/
     end
-    test_name
+    nil
   end
 end

@@ -39,6 +39,8 @@ describe SingleTest do
     it "finds in strangely formatted files" do
       SingleTest.find_example_in_spec(examples_file,'2').should == 'example "2"'
     end
+    it "returns nil for unfound examples" do
+      SingleTest.find_example_in_spec(examples_file,'not here').should == nil
+    end
   end
 end
-
