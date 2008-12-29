@@ -1,0 +1,7 @@
+it "example 1" do
+  something_be_here
+end
+
+it    'example "2"'   do
+  wtf(yes)
+end
