@@ -21,6 +21,8 @@ USAGE
 
     rake spec:user:token    #run the first spec in user_spec.rb that matches /token/
 
+    rake spec:user X=       #run test on spec_sever (if one is running...)
+
 AUTHOR
 ======
 Michael Grosser  

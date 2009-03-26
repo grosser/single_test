@@ -18,7 +18,7 @@ module SingleTest
     puts "running: #{file}"
     case type
     when 'test' then sh "ruby -Ilib:test #{file} -n /#{test_name}/"
-    when 'spec' then sh "spec -O spec/spec.opts #{file}" + (test_name ? " -e '#{test_name}'" : '')
+    when 'spec' then sh "spec -O spec/spec.opts #{file}" + (test_name ? " -e '#{test_name}' " : '') + (ENV['X'] ? " -X " : "")
     else raise "Unknown: #{type}"
     end
   end
