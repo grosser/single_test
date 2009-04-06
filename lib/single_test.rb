@@ -1,6 +1,6 @@
 module SingleTest
   extend self
-  CMD_LINE_MATCHER = /(spec|test)\:.*(\:.*)?$/
+  CMD_LINE_MATCHER = /^(spec|test)\:.*(\:.*)?$/
   SEARCH_ORDER =  {
     'test'=> %w(unit functional integration *),
     'spec'=> %w(models controllers views helpers *),
