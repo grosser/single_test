@@ -16,9 +16,10 @@ module SingleTest
 
     #run the file
     puts "running: #{file}"
+    ENV['RAILS_ENV'] = 'test' #current EVN['RAILS_ENV'] is 'development', and will also exist in all called commands
     case type
     when 'test' then sh "ruby -Ilib:test #{file} -n /#{test_name}/"
-    when 'spec' then sh "spec -O spec/spec.opts #{file}" + (test_name ? " -e '#{test_name}' " : '') + (ENV['X'] ? " -X " : "")
+    when 'spec' then sh "script/spec -O spec/spec.opts #{file}" + (test_name ? " -e '#{test_name}' " : '') + (ENV['X'] ? " -X " : "")
     else raise "Unknown: #{type}"
     end
   end
