@@ -12,7 +12,9 @@ module SingleTest
     return unless file
 
     #when spec, convert test_name regex to actual test_name
-    test_name = find_example_in_spec(file,test_name) if type == 'spec' && test_name
+    if type == 'spec' && test_name
+      test_name = find_example_in_spec(file, test_name) || test_name
+    end
 
     #run the file
     puts "running: #{file}"
@@ -46,6 +48,7 @@ module SingleTest
         return found.first unless found.empty?
       end
     end
+    nil
   end
 
   def find_example_in_spec(file, test_name)
