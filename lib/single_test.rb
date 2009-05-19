@@ -6,6 +6,15 @@ module SingleTest
     'spec'=> %w(models controllers views helpers *),
   }
 
+  def run_one_by_one(type)
+    tests = FileList["#{RAILS_ROOT}/#{type}/**/*_#{type}.rb"].reject{|file|File.directory?(file)}
+    puts "Running #{tests.size} #{type}s"
+    tests.sort.each do |file|
+      SingleTest.run_test(type, file)
+      puts ''
+    end
+  end
+
   def run_from_cli(call)
     type, file, test_name = parse_cli(call)
     file = find_test_file(type,file)
@@ -19,11 +28,7 @@ module SingleTest
     #run the file
     puts "running: #{file}"
     ENV['RAILS_ENV'] = 'test' #current EVN['RAILS_ENV'] is 'development', and will also exist in all called commands
-    case type
-    when 'test' then sh "ruby -Ilib:test #{file} -n /#{test_name}/"
-    when 'spec' then sh "script/spec -O spec/spec.opts #{file}" + (test_name ? " -e '#{test_name}' " : '') + (ENV['X'] ? " -X " : "")
-    else raise "Unknown: #{type}"
-    end
+    run_test(type, file, test_name)
   end
 
   # spec:user:blah --> [spec,user,blah]
@@ -56,5 +61,13 @@ module SingleTest
       return $2 if line =~ /.*it\s*(["'])(.*#{test_name}.*)\1\s*do/
     end
     nil
+  end
+
+  def run_test(type, file, test_name=nil)
+    case type.to_s
+    when 'test' then sh "ruby -Ilib:test #{file} -n /#{test_name}/"
+    when 'spec' then sh "script/spec -O spec/spec.opts #{file}" + (test_name ? " -e '#{test_name}'" : '') + (ENV['X'] ? " -X" : "")
+    else raise "Unknown: #{type}"
+    end
   end
 end

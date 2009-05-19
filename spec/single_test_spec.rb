@@ -28,6 +28,7 @@ describe SingleTest do
       SingleTest.parse_cli('test:something:else:oh:no')[2].should == 'else:oh:no'
     end
   end
+
   describe :find_example_in_spec do
     examples_file = File.join(File.dirname(__FILE__),'example_finder_test.txt')
     it "finds a complete statement" do
@@ -41,6 +42,42 @@ describe SingleTest do
     end
     it "returns nil for unfound examples" do
       SingleTest.find_example_in_spec(examples_file,'not here').should == nil
+    end
+  end
+
+  describe :run_test do
+    after :all do
+      ENV['X']=nil
+    end
+
+    it "fails when type is not spec/test" do
+      lambda{SingleTest.run_test('x','y')}.should raise_error
+    end
+
+    it "runs whole tests" do
+      SingleTest.expects(:sh).with('ruby -Ilib:test xxx -n //')
+      SingleTest.run_test('test','xxx')
+    end
+
+    it "runs single tests on their own" do
+      SingleTest.expects(:sh).with('ruby -Ilib:test xxx -n /yyy/')
+      SingleTest.run_test('test', 'xxx', 'yyy')
+    end
+
+    it "runs whole specs without -e" do
+      SingleTest.expects(:sh).with('script/spec -O spec/spec.opts xxx')
+      SingleTest.run_test('spec','xxx')
+    end
+
+    it "runs single specs through -e" do
+      SingleTest.expects(:sh).with("script/spec -O spec/spec.opts xxx -e 'yyy'")
+      SingleTest.run_test('spec','xxx', 'yyy')
+    end
+
+    it "runs single specs through -e with -X" do
+      ENV['X']=''
+      SingleTest.expects(:sh).with("script/spec -O spec/spec.opts xxx -e 'yyy' -X")
+      SingleTest.run_test('spec','xxx', 'yyy')
     end
   end
 end
