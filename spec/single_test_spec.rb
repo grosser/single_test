@@ -81,14 +81,20 @@ describe SingleTest do
     end
 
     it "runs single specs through -e" do
-      SingleTest.expects(:sh).with("script/spec -O spec/spec.opts xxx -e 'yyy'")
+      SingleTest.expects(:sh).with('script/spec -O spec/spec.opts xxx -e "yyy"')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs single specs through -e with -X" do
       ENV['X']=''
-      SingleTest.expects(:sh).with("script/spec -O spec/spec.opts xxx -e 'yyy' -X")
+      SingleTest.expects(:sh).with('script/spec -O spec/spec.opts xxx -e "yyy" -X')
       SingleTest.run_test('spec','xxx', 'yyy')
+    end
+
+    it "runs quoted specs though -e" do
+      SingleTest.expects(:sh).with(%Q(script/spec -O spec/spec.opts xxx -e "y\\\"yy" -X))
+      SingleTest.run_test('spec','xxx', 'y"yy')
+
     end
   end
 end
