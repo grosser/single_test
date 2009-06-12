@@ -10,7 +10,8 @@ module SingleTest
     tests = FileList["#{RAILS_ROOT}/#{type}/**/*_#{type}.rb"].reject{|file|File.directory?(file)}
     puts "Running #{tests.size} #{type}s"
     tests.sort.each do |file|
-      SingleTest.run_test(type, file)
+      puts "Running #{file}"
+      run_test(type, file)
       puts ''
     end
   end
@@ -66,7 +67,7 @@ module SingleTest
   def run_test(type, file, test_name=nil)
     case type.to_s
     when 'test' then sh "ruby -Ilib:test #{file} -n /#{test_name}/"
-    when 'spec' then sh "script/spec -O spec/spec.opts #{file}" + (test_name ? %Q( -e "#{test_name.sub('"',"\\\"")}") : '') + (ENV['X'] ? " -X" : "")
+    when 'spec' then sh "export RAILS_ENV=test ; script/spec -O spec/spec.opts #{file}" + (test_name ? %Q( -e "#{test_name.sub('"',"\\\"")}") : '') + (ENV['X'] ? " -X" : "")
     else raise "Unknown: #{type}"
     end
   end
