@@ -19,7 +19,7 @@ namespace :spec do
   desc "run test for last modified file in app folder"
   task :last do
     def last_modified_file(dir, options={})
-      Dir["#{dir}/**/*#{options[:ext]}"].sort_by { |p| File.mtime(p) }.first
+      Dir["#{dir}/**/*#{options[:ext]}"].sort_by { |p| File.mtime(p) }.last
     end
     
     last = last_modified_file('app',:ext=>'.rb')
