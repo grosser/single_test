@@ -13,3 +13,21 @@ end
     end
   end
 end
+
+#TODO make more generic / use for test / add to readme
+namespace :spec do
+  desc "run test for last modified file in app folder"
+  task :last do
+    def last_modified_file(dir, options={})
+      Dir["#{dir}/**/*#{options[:ext]}"].sort_by { |p| File.mtime(p) }.first
+    end
+    
+    last = last_modified_file('app',:ext=>'.rb')
+    spec = last.sub('app','spec').sub('.rb','_spec.rb')
+    if File.exist?(spec)
+      sh "script/spec -O spec/spec.opts #{spec}"
+    else
+      puts "could not find #{spec}"
+    end
+  end
+end
