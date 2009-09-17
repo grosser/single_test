@@ -1,22 +1,14 @@
-PROBLEM
-=======
-To run a single test / single spec you need to
-
- - know test/spec commandline interface
- - remember where a file is
- - type the full path
- - set the correct options (color/...)
-
+Runs a single test/spec via rake.
 
 USAGE
 =====
     script/plugin install git://github.com/grosser/single_test.git
 
 ###Single test/spec
-    rake spec:user          #run spec/model/user_spec.rb (search for user*_spec.rb)
+    rake spec:user          #run spec/model/user_spec.rb (searches for user*_spec.rb)
     rake test:users_c       #run test/functional/users_controller_test.rb
     rake spec:admin/users_c #run spec/controllers/admin/users_controller_spec.rb
-    rake test:u*hel         #run test/helpers/user_helper_test.rb (seach for u*hel*_test.rb)
+    rake test:u*hel         #run test/helpers/user_helper_test.rb (searches for u*hel*_test.rb)
 
 ###Single test-case/example
     rake spec:user:token    #run the first spec in user_spec.rb that matches /token/
@@ -29,6 +21,13 @@ USAGE
     rake spec:one_by_one    #run each spec/test one by one, to find tests that fail when ran
     rake test:one_by_one    #on their own or produce strange output
 
+###For last mofified file
+    rake test:last
+    rake spec:last
+
+TODO
+====
+ - make test:last more clever e.g. lib -> try spec + spec/lib
 
 AUTHOR
 ======

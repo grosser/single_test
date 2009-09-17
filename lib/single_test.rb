@@ -6,6 +6,16 @@ module SingleTest
     'spec'=> %w(models controllers views helpers *),
   }
 
+  def run_last(type)
+    last = last_modified_file('app',:ext=>'.rb')
+    test = last.sub('app',type).sub('.rb',"_#{type}.rb")
+    if File.exist?(test)
+      run_test(type, test)
+    else
+      puts "could not find #{test}"
+    end
+  end
+
   def run_one_by_one(type)
     tests = FileList["#{RAILS_ROOT}/#{type}/**/*_#{type}.rb"].reject{|file|File.directory?(file)}
     puts "Running #{tests.size} #{type}s"
@@ -70,5 +80,9 @@ module SingleTest
     when 'spec' then sh "export RAILS_ENV=test ; script/spec -O spec/spec.opts #{file}" + (test_name ? %Q( -e "#{test_name.sub('"',"\\\"")}") : '') + (ENV['X'] ? " -X" : "")
     else raise "Unknown: #{type}"
     end
+  end
+
+  def last_modified_file(dir, options={})
+    Dir["#{dir}/**/*#{options[:ext]}"].sort_by { |p| File.mtime(p) }.last
   end
 end
