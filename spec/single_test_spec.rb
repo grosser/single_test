@@ -1,4 +1,4 @@
-require File.expand_path("spec_helper", File.dirname(__FILE__))
+require "spec/spec_helper"
 require 'single_test'
 
 describe SingleTest do
@@ -53,6 +53,28 @@ describe SingleTest do
 
     it "returns nil for unfound examples" do
       SingleTest.find_example_in_spec(examples_file,'not here').should == nil
+    end
+  end
+
+  describe :run_last do
+    before do
+      `mkdir #{RAILS_ROOT}/app`
+      `touch #{RAILS_ROOT}/app/yyy.rb`
+      `touch #{RAILS_ROOT}/app/xxx.rb`
+      `mkdir #{RAILS_ROOT}/spec`
+      `touch #{RAILS_ROOT}/spec/xxx_spec.rb`
+      `touch #{RAILS_ROOT}/spec/yyy_spec.rb`
+    end
+
+    it "runs the last test" do
+      SingleTest.expects(:run_test).with(:spec, "#{RAILS_ROOT}/spec/xxx_spec.rb")
+      SingleTest.run_last(:spec)
+    end
+
+    it "runs another file when timestamps change" do
+      `touch -t 12312359 #{RAILS_ROOT}/app/yyy.rb` # last minute in current year, spec will fail on new years eve :D
+      SingleTest.expects(:run_test).with(:spec, "#{RAILS_ROOT}/spec/yyy_spec.rb")
+      SingleTest.run_last(:spec)
     end
   end
 

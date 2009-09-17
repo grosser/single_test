@@ -7,8 +7,9 @@ module SingleTest
   }
 
   def run_last(type)
-    last = last_modified_file('app',:ext=>'.rb')
-    test = last.sub('app',type).sub('.rb',"_#{type}.rb")
+    path = "#{RAILS_ROOT}/app"
+    last = last_modified_file(path,:ext=>'.rb')
+    test = last.sub('/app/',"/#{type}/").sub('.rb',"_#{type}.rb")
     if File.exist?(test)
       run_test(type, test)
     else
