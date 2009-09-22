@@ -25,6 +25,10 @@ USAGE
     rake test:last
     rake spec:last
 
+TIPS
+====
+ - if `script/spec` is missing, if will use just `spec` for specs (which solves some issues)
+
 TODO
 ====
  - make test:last more clever e.g. lib -> try spec + spec/lib
