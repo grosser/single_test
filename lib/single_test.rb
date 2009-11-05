@@ -84,7 +84,7 @@ module SingleTest
   end
 
   def spec_executable
-    File.exist?("script/spec") ? "script/spec" : "spec"
+    File.exist?("#{RAILS_ROOT}/script/spec") ? "script/spec" : "spec"
   end
 
   def last_modified_file(dir, options={})

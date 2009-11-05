@@ -67,13 +67,13 @@ describe SingleTest do
     end
 
     it "runs the last test" do
-      SingleTest.expects(:run_test).with(:spec, "#{RAILS_ROOT}/spec/xxx_spec.rb")
+      SingleTest.should_receive(:run_test).with(:spec, "#{RAILS_ROOT}/spec/yyy_spec.rb")
       SingleTest.run_last(:spec)
     end
 
     it "runs another file when timestamps change" do
       `touch -t 12312359 #{RAILS_ROOT}/app/yyy.rb` # last minute in current year, spec will fail on new years eve :D
-      SingleTest.expects(:run_test).with(:spec, "#{RAILS_ROOT}/spec/yyy_spec.rb")
+      SingleTest.should_receive(:run_test).with(:spec, "#{RAILS_ROOT}/spec/yyy_spec.rb")
       SingleTest.run_last(:spec)
     end
   end
@@ -88,33 +88,33 @@ describe SingleTest do
     end
 
     it "runs whole tests" do
-      SingleTest.expects(:sh).with('ruby -Ilib:test xxx -n //')
+      SingleTest.should_receive(:sh).with('ruby -Ilib:test xxx -n //')
       SingleTest.run_test('test','xxx')
     end
 
     it "runs single tests on their own" do
-      SingleTest.expects(:sh).with('ruby -Ilib:test xxx -n /yyy/')
+      SingleTest.should_receive(:sh).with('ruby -Ilib:test xxx -n /yyy/')
       SingleTest.run_test('test', 'xxx', 'yyy')
     end
 
     it "runs whole specs without -e" do
-      SingleTest.expects(:sh).with('export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx')
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx')
       SingleTest.run_test('spec','xxx')
     end
 
     it "runs single specs through -e" do
-      SingleTest.expects(:sh).with('export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx -e "yyy"')
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx -e "yyy"')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs single specs through -e with -X" do
       ENV['X']=''
-      SingleTest.expects(:sh).with('export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx -e "yyy" -X')
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx -e "yyy" -X')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs quoted specs though -e" do
-      SingleTest.expects(:sh).with(%Q(export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx -e "y\\\"yy" -X))
+      SingleTest.should_receive(:sh).with(%Q(export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx -e "y\\\"yy" -X))
       SingleTest.run_test('spec','xxx', 'y"yy')
 
     end
