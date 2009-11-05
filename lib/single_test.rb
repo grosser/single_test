@@ -1,3 +1,5 @@
+require 'rake'
+
 module SingleTest
   extend self
   CMD_LINE_MATCHER = /^(spec|test)\:.*(\:.*)?$/
@@ -17,8 +19,12 @@ module SingleTest
     end
   end
 
+  def all_tests(type)
+    FileList["#{type}/**/*_#{type}.rb"].reject{|file|File.directory?(file)}
+  end
+
   def run_one_by_one(type)
-    tests = FileList["#{type}/**/*_#{type}.rb"].reject{|file|File.directory?(file)}
+    tests = all_tests(type)
     puts "Running #{tests.size} #{type}s"
     tests.sort.each do |file|
       puts "Running #{file}"
@@ -55,14 +61,14 @@ module SingleTest
   end
 
   def find_test_file(type,file_name)
-    ["","**/"].each do |depth| #find in lower folders first
-      SEARCH_ORDER[type].each do |folder|
-        base = "#{type}/#{folder}/#{depth}#{file_name}"
-        #?rb -> if used without a wildcard the search would always contain
-        #even a non-existing file
-        #search for user_spec.rb before finding user_admin_spec.rb
-        found = (FileList["#{base}_#{type}?rb"] + FileList["#{base}*_#{type}.rb"])
-        return found.first unless found.empty?
+    ["","**/"].each do |depth| # find in lower folders first
+      ['','*'].each do |exactness| # find exact matches first
+        SEARCH_ORDER[type].each do |folder|
+          base = "#{type}/#{folder}/#{depth}#{file_name}"
+          # without wildcard no search is performed -> ?rb
+          found = FileList["#{base}#{exactness}_#{type}?rb"].first
+          return found if found
+        end
       end
     end
     nil

@@ -36,6 +36,42 @@ describe SingleTest do
     end
   end
 
+  describe :find_test_file do
+    def make_file(path)
+      folder = File.dirname(path)
+      `mkdir -p #{folder}` unless File.exist?(folder)
+      `touch #{path}`
+      raise unless File.exist?(path)
+    end
+
+    before do
+      `rm -rf spec`
+    end
+
+    it "finds exact matches first" do
+      make_file 'spec/mixins/xxx_spec.rb'
+      make_file 'spec/controllers/xxx_controller_spec.rb'
+      SingleTest.find_test_file('spec','xxx').should == 'spec/mixins/xxx_spec.rb'
+    end
+
+    it "finds lower files first" do
+      make_file 'spec/mixins/xxx_spec.rb'
+      make_file 'spec/mixins/xxx/xxx_spec.rb'
+      SingleTest.find_test_file('spec','xxx').should == 'spec/mixins/xxx_spec.rb'
+    end
+
+    it "finds models before controllers" do
+      make_file 'spec/models/xxx_spec.rb'
+      make_file 'spec/controllers/xxx_controller_spec.rb'
+      SingleTest.find_test_file('spec','xx').should == 'spec/models/xxx_spec.rb'
+    end
+
+    it "finds with paths" do
+      make_file 'spec/controllers/admin/xxx_controller_spec.rb'
+      SingleTest.find_test_file('spec','ad*/xx').should == 'spec/controllers/admin/xxx_controller_spec.rb'
+    end
+  end
+
   describe :find_example_in_spec do
     examples_file = File.join(File.dirname(__FILE__),'example_finder_test.txt')
 
