@@ -1,15 +1,16 @@
 # ---- requirements
-here = File.dirname(__FILE__)
-$LOAD_PATH << File.expand_path("../lib", here)
-RAILS_ROOT = "#{here}/rails_root"
+SPEC_ROOT = File.dirname(__FILE__)
+$LOAD_PATH << File.expand_path("../lib", SPEC_ROOT)
 
 # ---- rspec
 Spec::Runner.configure do |config|
   config.before do
-    `mkdir -p #{RAILS_ROOT}/script`
-    `touch #{RAILS_ROOT}/script/spec`
+    `mkdir -p #{SPEC_ROOT}/script`
+    `touch #{SPEC_ROOT}/script/spec`
   end
   config.after do
-    `rm -rf #{RAILS_ROOT}`
+    `rm -rf #{SPEC_ROOT}/script`
+    `rm -rf #{SPEC_ROOT}/app`
+    `rm -rf #{SPEC_ROOT}/spec`
   end
 end

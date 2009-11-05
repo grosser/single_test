@@ -7,9 +7,9 @@ module SingleTest
   }
 
   def run_last(type)
-    path = "#{RAILS_ROOT}/app"
+    path = "app"
     last = last_modified_file(path,:ext=>'.rb')
-    test = last.sub('/app/',"/#{type}/").sub('.rb',"_#{type}.rb")
+    test = last.sub('app/',"#{type}/").sub('.rb',"_#{type}.rb")
     if File.exist?(test)
       run_test(type, test)
     else
@@ -18,7 +18,7 @@ module SingleTest
   end
 
   def run_one_by_one(type)
-    tests = FileList["#{RAILS_ROOT}/#{type}/**/*_#{type}.rb"].reject{|file|File.directory?(file)}
+    tests = FileList["#{type}/**/*_#{type}.rb"].reject{|file|File.directory?(file)}
     puts "Running #{tests.size} #{type}s"
     tests.sort.each do |file|
       puts "Running #{file}"
@@ -57,7 +57,7 @@ module SingleTest
   def find_test_file(type,file_name)
     ["","**/"].each do |depth| #find in lower folders first
       SEARCH_ORDER[type].each do |folder|
-        base = "#{RAILS_ROOT}/#{type}/#{folder}/#{depth}#{file_name}"
+        base = "#{type}/#{folder}/#{depth}#{file_name}"
         #?rb -> if used without a wildcard the search would always contain
         #even a non-existing file
         #search for user_spec.rb before finding user_admin_spec.rb
@@ -84,7 +84,7 @@ module SingleTest
   end
 
   def spec_executable
-    File.exist?("#{RAILS_ROOT}/script/spec") ? "script/spec" : "spec"
+    File.exist?("script/spec") ? "script/spec" : "spec"
   end
 
   def last_modified_file(dir, options={})

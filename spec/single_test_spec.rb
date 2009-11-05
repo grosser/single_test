@@ -1,4 +1,4 @@
-require "spec/spec_helper"
+require "spec_helper"
 require 'single_test'
 
 describe SingleTest do
@@ -58,22 +58,22 @@ describe SingleTest do
 
   describe :run_last do
     before do
-      `mkdir #{RAILS_ROOT}/app`
-      `touch #{RAILS_ROOT}/app/yyy.rb`
-      `touch #{RAILS_ROOT}/app/xxx.rb`
-      `mkdir #{RAILS_ROOT}/spec`
-      `touch #{RAILS_ROOT}/spec/xxx_spec.rb`
-      `touch #{RAILS_ROOT}/spec/yyy_spec.rb`
+      `mkdir app` unless File.exist?('app')
+      `touch app/yyy.rb`
+      `touch app/xxx.rb`
+      `mkdir spec` unless File.exist?('spec')
+      `touch spec/xxx_spec.rb`
+      `touch spec/yyy_spec.rb`
     end
 
     it "runs the last test" do
-      SingleTest.should_receive(:run_test).with(:spec, "#{RAILS_ROOT}/spec/yyy_spec.rb")
+      SingleTest.should_receive(:run_test).with(:spec, "spec/yyy_spec.rb")
       SingleTest.run_last(:spec)
     end
 
     it "runs another file when timestamps change" do
-      `touch -t 12312359 #{RAILS_ROOT}/app/yyy.rb` # last minute in current year, spec will fail on new years eve :D
-      SingleTest.should_receive(:run_test).with(:spec, "#{RAILS_ROOT}/spec/yyy_spec.rb")
+      `touch -t 12312359 #{SPEC_ROOT}/app/yyy.rb` # last minute in current year, spec will fail on new years eve :D
+      SingleTest.should_receive(:run_test).with(:spec, "spec/yyy_spec.rb")
       SingleTest.run_last(:spec)
     end
   end
