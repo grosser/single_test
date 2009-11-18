@@ -8,5 +8,5 @@ desc "Run all specs in spec directory"
 task :spec do |t|
   options = "--colour --format progress --loadby --reverse"
   files = FileList['spec/**/*_spec.rb'].map{|f| f.sub(%r{^spec/},'') }
-  system("cd spec && spec #{options} #{files}")
+  exit system("cd spec && spec #{options} #{files}") ? 0 : 1
 end
