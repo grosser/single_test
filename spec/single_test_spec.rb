@@ -155,4 +155,12 @@ describe SingleTest do
 
     end
   end
+
+  describe :load_tasks do
+    it "can load em" do
+      (Rake::Task['spec:one_by_one'] rescue nil).should == nil
+      SingleTest.load_tasks
+      Rake::Task['spec:one_by_one'].should_not == nil
+    end
+  end
 end

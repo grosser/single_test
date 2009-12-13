@@ -8,6 +8,11 @@ module SingleTest
     'spec'=> %w(models controllers views helpers *),
   }
 
+  def load_tasks
+    tasks = File.join(File.dirname(__FILE__), '..', 'tasks')
+    load File.join(tasks, 'single_test.rake')
+  end
+
   def run_last(type)
     path = "app"
     last = last_modified_file(path,:ext=>'.rb')
