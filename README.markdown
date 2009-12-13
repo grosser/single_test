@@ -2,7 +2,16 @@ Runs a single test/spec via rake.
 
 USAGE
 =====
+As Rails plugin:
     script/plugin install git://github.com/grosser/single_test.git
+
+As Gem:
+  sudo gem install single_test
+
+  # in your Rakefile
+  require 'single_test'
+  SingleTest.load_tasks
+
 
 ###Single test/spec
     rake spec:user          #run spec/model/user_spec.rb (searches for user*_spec.rb)
