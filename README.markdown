@@ -37,6 +37,7 @@ As Gem:
 TIPS
 ====
  - if `script/spec` is missing, if will use just `spec` for specs (which solves some issues)
+ - run whole describe blocks: `describe 'xxx' do describe 'yyy'` --> `rake spec:file:'xxx yyy'`
 
 TODO
 ====
