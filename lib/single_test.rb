@@ -89,7 +89,10 @@ module SingleTest
   def run_test(type, file, test_name=nil)
     case type.to_s
     when 'test' then sh "ruby -Ilib:test #{file} -n /#{test_name}/"
-    when 'spec' then sh "export RAILS_ENV=test ; #{spec_executable} --options spec/spec.opts #{file}" + (test_name ? %Q( -e "#{test_name.sub('"',"\\\"")}") : '') + (ENV['X'] ? " -X" : "")
+    when 'spec' then
+      options_file = "spec/spec.opts"
+      options_file = (File.exist?(options_file) ? " --options #{options_file}" : "")
+      sh "export RAILS_ENV=test ; #{spec_executable}#{options_file} #{file}" + (test_name ? %Q( -e "#{test_name.sub('"',"\\\"")}") : '') + (ENV['X'] ? " -X" : "")
     else raise "Unknown: #{type}"
     end
   end
