@@ -103,7 +103,7 @@ describe SingleTest do
     end
 
     it "runs the last test" do
-      SingleTest.should_receive(:run_test).with(:spec, "spec/yyy_spec.rb")
+      SingleTest.should_receive(:run_test).with(:spec, "spec/xxx_spec.rb")
       SingleTest.run_last(:spec)
     end
 
