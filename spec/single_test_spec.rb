@@ -134,23 +134,23 @@ describe SingleTest do
     end
 
     it "runs whole specs without -e" do
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx')
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec --options spec/spec.opts xxx')
       SingleTest.run_test('spec','xxx')
     end
 
     it "runs single specs through -e" do
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx -e "yyy"')
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec --options spec/spec.opts xxx -e "yyy"')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs single specs through -e with -X" do
       ENV['X']=''
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx -e "yyy" -X')
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec --options spec/spec.opts xxx -e "yyy" -X')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs quoted specs though -e" do
-      SingleTest.should_receive(:sh).with(%Q(export RAILS_ENV=test ; script/spec -O spec/spec.opts xxx -e "y\\\"yy" -X))
+      SingleTest.should_receive(:sh).with(%Q(export RAILS_ENV=test ; script/spec --options spec/spec.opts xxx -e "y\\\"yy" -X))
       SingleTest.run_test('spec','xxx', 'y"yy')
 
     end
