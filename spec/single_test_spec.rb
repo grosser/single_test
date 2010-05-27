@@ -163,6 +163,20 @@ describe SingleTest do
       SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec --options spec/spec.opts xxx')
       SingleTest.run_test('spec','xxx')
     end
+
+    it "runs with spec if script/spec is not found" do
+      File.stub!(:exist?).and_return false
+      File.should_receive(:exist?).with('script/spec').and_return false
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; spec xxx')
+      SingleTest.run_test('spec','xxx')
+    end
+
+    it "uses bundler if Gemfile is present" do
+      File.stub!(:exist?).and_return false
+      File.should_receive(:exist?).with('Gemfile').and_return true
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; bundle exec spec xxx')
+      SingleTest.run_test('spec','xxx')
+    end
   end
 
   describe :load_tasks do
