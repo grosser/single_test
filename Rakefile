@@ -1,4 +1,4 @@
-task :default do |t|
+task :default do
   options = "--colour"
   files = FileList['spec/**/*_spec.rb'].map{|f| f.sub(%r{^spec/},'') }
   exit system("cd spec && spec #{options} #{files}") ? 0 : 1
@@ -17,5 +17,5 @@ begin
 
   Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install jeweler"
 end
