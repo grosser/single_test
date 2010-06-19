@@ -9,7 +9,7 @@ module SingleTest
   }
 
   def load_tasks
-    require File.expand_path(File.join(File.dirname(__FILE__), 'single_test', 'tasks'))
+    load File.join(File.dirname(__FILE__), 'tasks', 'single_test.rake')
   end
 
   def run_last(type)
