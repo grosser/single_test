@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{single_test}
-  s.version = "0.3.4"
+  s.version = "0.3.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Grosser"]
-  s.date = %q{2010-05-27}
+  s.date = %q{2010-06-19}
   s.email = %q{grosser.michael@gmail.com}
   s.extra_rdoc_files = [
     "README.markdown"
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "lib/single_test.rb",
-     "lib/tasks/single_test.rake",
+     "lib/single_test/tasks.rb",
      "single_test.gemspec",
      "spec/example_finder_test.txt",
      "spec/single_test_spec.rb",
