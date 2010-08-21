@@ -5,14 +5,16 @@
 
 Gem::Specification.new do |s|
   s.name = %q{single_test}
-  s.version = "0.3.6"
+  s.version = "0.3.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Grosser"]
-  s.date = %q{2010-06-19}
+  s.date = %q{2010-08-21}
   s.email = %q{grosser.michael@gmail.com}
   s.files = [
-    "Rakefile",
+    "Gemfile",
+     "Gemfile.lock",
+     "Rakefile",
      "Readme.md",
      "VERSION",
      "lib/single_test.rb",
