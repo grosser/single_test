@@ -99,18 +99,38 @@ module SingleTest
     end
   end
 
+  # copied from parallel_tests http://github.com/grosser/parallel_tests/blob/master/lib/parallel_specs.rb#L9
   def spec_executable
-    if File.exist?("script/spec")
+    cmd = if File.file?("script/spec")
       "script/spec"
-    elsif File.exist?('Gemfile')
-      # TODO this fails when single test was started with "bundle exec" and bundler is not part of the bundle 
-      "bundle exec spec"
+    elsif bundler_enabled?
+      cmd = (`bundle show rspec` =~ %r{/rspec-1[^/]+$} ? "spec" : "rspec")
+      "bundle exec #{cmd}"
     else
-      "spec"
+      %w[spec rspec].detect{|cmd| system "#{cmd} --version > /dev/null 2>&1" }
     end
+    cmd or raise("Can't find executables rspec or spec")
   end
 
   def last_modified_file(dir, options={})
     Dir["#{dir}/**/*#{options[:ext]}"].sort_by { |p| File.mtime(p) }.last
+  end
+
+  private
+
+  # copied from http://github.com/carlhuda/bundler Bundler::SharedHelpers#find_gemfile
+  def self.bundler_enabled?
+    return true if Object.const_defined?(:Bundler)
+
+    previous = nil
+    current = File.expand_path(Dir.pwd)
+
+    until !File.directory?(current) || current == previous
+      filename = File.join(current, "Gemfile")
+      return true if File.exists?(filename)
+      current, previous = File.expand_path("..", current), current
+    end
+
+    false
   end
 end
