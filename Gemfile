@@ -1,5 +1,7 @@
-source 'http://rubygems.org'
+source :rubygems
 
-gem 'rake'
-gem 'jeweler'
-gem 'rspec'
+group :dev do
+  gem 'rake'
+  gem 'jeweler'
+  gem 'rspec'
+end
