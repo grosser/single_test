@@ -3,10 +3,6 @@ require 'rake'
 module SingleTest
   extend self
   CMD_LINE_MATCHER = /^(spec|test)\:.*(\:.*)?$/
-  SEARCH_ORDER =  {
-    'test'=> %w(unit functional integration *),
-    'spec'=> %w(models controllers views helpers *),
-  }
 
   def load_tasks
     load File.join(File.dirname(__FILE__), 'tasks', 'single_test.rake')
@@ -64,18 +60,15 @@ module SingleTest
     ]
   end
 
+  # find files matching the given name,
+  # prefer lower folders and short names, since deep/long names
+  # can be found via a more precise search string
   def find_test_file(type,file_name)
-    ["","**/"].each do |depth| # find in lower folders first
-      ['','*'].each do |exactness| # find exact matches first
-        SEARCH_ORDER[type].each do |folder|
-          base = "#{type}/#{folder}/#{depth}#{file_name}"
-          # without wildcard no search is performed -> ?rb
-          found = FileList["#{base}#{exactness}_#{type}?rb"].first
-          return found if found
-        end
-      end
-    end
-    nil
+    regex = /#{file_name.gsub('*','.*').gsub('?','.')}/ # support *? syntax for search
+    all_tests(type).grep(regex).sort_by do |path|
+      parts = path.split('/')
+      [parts.size, parts.last.size]
+    end.first
   end
 
   def find_example_in_spec(file, test_name)

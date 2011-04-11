@@ -14,10 +14,12 @@ As Gem:
 
 
 ###Single test/spec
-    rake spec:user          #run spec/model/user_spec.rb (searches for user*_spec.rb)
+Searchs for test-files matching the given name.
+
+    rake spec:user          #run spec/model/user_spec.rb
     rake test:users_c       #run test/functional/users_controller_test.rb
     rake spec:admin/users_c #run spec/controllers/admin/users_controller_spec.rb
-    rake test:u*hel         #run test/helpers/user_helper_test.rb (searches for u*hel*_test.rb)
+    rake test:u*hel         #run test/helpers/user_helper_test.rb
 
 ###Single test-case/example
     rake spec:user:token    #run the first spec in user_spec.rb that matches /token/
@@ -45,6 +47,6 @@ TODO
 
 AUTHOR
 ======
-[Michael Grosser](http://pragmatig.wordpress.com)  
-grosser.michael@gmail.com  
-Hereby placed under public domain, do what you want, just do not hold me accountable...  
+[Michael Grosser](http://pragmatig.wordpress.com)
+grosser.michael@gmail.com
+Hereby placed under public domain, do what you want, just do not hold me accountable...

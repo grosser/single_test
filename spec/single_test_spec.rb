@@ -60,15 +60,15 @@ describe SingleTest do
       SingleTest.find_test_file('spec','xxx').should == 'spec/mixins/xxx_spec.rb'
     end
 
-    it "finds models before controllers" do
+    it "finds short matches first" do
       make_file 'spec/models/xxx_spec.rb'
       make_file 'spec/controllers/xxx_controller_spec.rb'
       SingleTest.find_test_file('spec','xx').should == 'spec/models/xxx_spec.rb'
     end
 
-    it "finds with paths" do
+    it "finds with wildcards" do
       make_file 'spec/controllers/admin/xxx_controller_spec.rb'
-      SingleTest.find_test_file('spec','ad*/xx').should == 'spec/controllers/admin/xxx_controller_spec.rb'
+      SingleTest.find_test_file('spec','ad*/x?x').should == 'spec/controllers/admin/xxx_controller_spec.rb'
     end
   end
 
