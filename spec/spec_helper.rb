@@ -3,7 +3,7 @@ SPEC_ROOT = File.dirname(__FILE__)
 $LOAD_PATH << File.expand_path("../lib", SPEC_ROOT)
 
 # ---- rspec
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.before do
     `mkdir -p #{SPEC_ROOT}/script`
     `touch #{SPEC_ROOT}/script/spec`
