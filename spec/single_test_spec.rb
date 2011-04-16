@@ -142,18 +142,28 @@ describe SingleTest do
       SingleTest.run_test('spec','xxx')
     end
 
-    it "runs single specs through -e" do
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec xxx -e "yyy"')
+    it "runs all matching specs through -e for rspec 2" do
+      File.should_receive(:file?).with('script/spec').and_return false
+      File.stub!(:readlines).and_return ['it "bla yyy" do']
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; bundle exec rspec xxx -e "yyy"')
+      SingleTest.run_test('spec','xxx', 'yyy')
+    end
+
+    it "runs full single specs through -e for rspec 1" do
+      File.stub!(:readlines).and_return ['it "bla yyy" do']
+      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec xxx -e "bla yyy"')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs single specs through -e with -X" do
+      File.stub!(:readlines).and_return []
       ENV['X']=''
       SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec xxx -e "yyy" -X')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs quoted specs though -e" do
+      File.stub!(:readlines).and_return []
       SingleTest.should_receive(:sh).with(%Q(export RAILS_ENV=test ; script/spec xxx -e "y\\\"yy"))
       SingleTest.run_test('spec','xxx', 'y"yy')
     end

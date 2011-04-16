@@ -38,11 +38,6 @@ module SingleTest
     file = find_test_file(type,file)
     return unless file
 
-    #when spec, convert test_name regex to actual test_name
-    if type == 'spec' && test_name
-      test_name = find_example_in_spec(file, test_name) || test_name
-    end
-
     #run the file
     puts "running: #{file}"
     ENV['RAILS_ENV'] = 'test' #current EVN['RAILS_ENV'] is 'development', and will also exist in all called commands
@@ -82,11 +77,12 @@ module SingleTest
     case type.to_s
     when 'test' then sh "ruby -Ilib:test #{file} -n /#{test_name}/"
     when 'spec' then
+      executable = spec_executable
       options_file = "spec/spec.opts"
       options_file = (File.exist?(options_file) ? " --options #{options_file}" : "")
-      command = "export RAILS_ENV=test ; #{spec_executable}#{options_file} #{file}"
-      command += (test_name ? %Q( -e "#{test_name.sub('"',"\\\"")}") : '') # just one test ?
-      command += (ENV['X'] ? " -X" : "") # run via drb ?
+      command = "export RAILS_ENV=test ; #{executable}#{options_file} #{file}"
+      command += test_name_matcher(executable, file, test_name)
+      command += " -X" if ENV['X'] # run via drb ?
       sh command
     else raise "Unknown: #{type}"
     end
@@ -110,6 +106,14 @@ module SingleTest
   end
 
   private
+
+  def test_name_matcher(executable, file, test_name)
+    if test_name and not executable.include?('rspec')
+      # rspec 1 only supports full test names -> find a matching test-name
+      test_name = find_example_in_spec(file, test_name) || test_name
+    end
+    test_name ? %Q( -e "#{test_name.sub('"',"\\\"")}") : ''
+  end
 
   # copied from http://github.com/carlhuda/bundler Bundler::SharedHelpers#find_gemfile
   def self.bundler_enabled?
