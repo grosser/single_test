@@ -95,11 +95,11 @@ describe SingleTest do
   describe :run_last do
     before do
       `mkdir app` unless File.exist?('app')
-      `touch app/yyy.rb`
-      `touch app/xxx.rb`
+      `touch -t 01010000 app/yyy.rb`
+      `touch -t 01020000 app/xxx.rb`
       `mkdir spec` unless File.exist?('spec')
-      `touch spec/xxx_spec.rb`
-      `touch spec/yyy_spec.rb`
+      `touch -t 01030000 spec/yyy_spec.rb`
+      `touch -t 01040000 spec/xxx_spec.rb`
     end
 
     it "runs the last test" do
@@ -118,7 +118,7 @@ describe SingleTest do
     before do
       ENV['X']=nil
     end
-    
+
     after do
       ENV['X']=nil
     end
