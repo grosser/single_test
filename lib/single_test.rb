@@ -1,6 +1,7 @@
 require 'rake'
 
 module SingleTest
+  include Rake::DSL
   extend self
   CMD_LINE_MATCHER = /^(spec|test)\:.*(\:.*)?$/
 
