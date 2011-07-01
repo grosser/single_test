@@ -45,8 +45,12 @@ TODO
 ====
  - make test:last more clever e.g. lib -> try spec + spec/lib
 
-AUTHOR
-======
-[Michael Grosser](http://pragmatig.wordpress.com)
-grosser.michael@gmail.com
+Authors
+=======
+
+### [Contributors](http://github.com/grosser/single_test/contributors)
+ - [Ian Young](https://github.com/iangreenleaf)
+
+[Michael Grosser](http://grosser.it)<br/>
+michael@grosser.it<br/>
 Hereby placed under public domain, do what you want, just do not hold me accountable...
