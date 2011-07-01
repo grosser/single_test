@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{single_test}
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Grosser"]
-  s.date = %q{2011-04-16}
+  s.date = %q{2011-07-01}
   s.email = %q{grosser.michael@gmail.com}
   s.files = [
     "Gemfile",
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = %q{http://github.com/grosser/single_test}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.4.2}
+  s.rubygems_version = %q{1.6.2}
   s.summary = %q{Rake tasks to invoke single tests/specs with rakish syntax}
   s.test_files = [
     "spec/single_test_spec.rb",
