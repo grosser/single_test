@@ -4,7 +4,7 @@ INSTALLATION
 =====
 ###As Rails plugin
 
-    script/plugin install git://github.com/grosser/single_test.git```
+    script/plugin install git://github.com/grosser/single_test.git
 
 ###As Gem
 
