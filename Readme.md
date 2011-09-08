@@ -45,6 +45,7 @@ TIPS
 ====
  - if `script/spec` is missing, if will use just `spec` for specs (which solves some issues)
  - run whole describe blocks: `describe 'xxx' do describe 'yyy'` --> `rake spec:file:'xxx yyy'`
+ - run single examples or describe blocks via line-numbers `rspec spec/foo_spec:123`
 
 TODO
 ====
@@ -55,6 +56,7 @@ Authors
 
 ### [Contributors](http://github.com/grosser/single_test/contributors)
  - [Ian Young](https://github.com/iangreenleaf)
+ - [Lorrin Nelson](https://github.com/lorrin)
 
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
