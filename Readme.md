@@ -1,20 +1,25 @@
 Runs a single test/spec via rake.
 
-USAGE
+INSTALLATION
 =====
-As Rails plugin:
+###As Rails plugin
+
     script/plugin install git://github.com/grosser/single_test.git
 
-As Gem:
-  sudo gem install single_test
+###As Gem
 
-  # in your Rakefile
-  require 'single_test'
-  SingleTest.load_tasks
+    sudo gem install single_test
 
+Include in your Rakefile:
+
+    require 'single_test'
+    SingleTest.load_tasks
+
+USAGE
+=====
 
 ###Single test/spec
-Searchs for test-files matching the given name.
+Searches for test-files matching the given name.
 
     rake spec:user          #run spec/model/user_spec.rb
     rake test:users_c       #run test/functional/users_controller_test.rb
