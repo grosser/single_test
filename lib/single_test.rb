@@ -1,8 +1,10 @@
 require 'rake'
+require 'active_support/inflector'
 
 module SingleTest
   extend self
 
+  include ActiveSupport::Inflector
   include Rake::DSL if defined? Rake::DSL # 0.8.7 does not have it
   CMD_LINE_MATCHER = /^(spec|test)\:.*(\:.*)?$/
 
@@ -49,7 +51,7 @@ module SingleTest
   # spec:user:blah --> [spec,user,blah]
   def parse_cli(call)
     raise "you should not have gotten here..." unless call =~ CMD_LINE_MATCHER
-    arguments = call.split(":",3)
+    arguments = underscore(call).split(":",3)
     [
       arguments[0], #type
       arguments[1], #file name
