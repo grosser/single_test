@@ -26,6 +26,10 @@ Searches for test-files matching the given name.
     rake spec:admin/users_c #run spec/controllers/admin/users_controller_spec.rb
     rake test:u*hel         #run test/helpers/user_helper_test.rb
 
+Searches for test-files by class (Foo::Bar -> foo/bar)
+
+    rake spec:Foo::Bar #run spec/foo/bar_spec.rb
+
 ###Single test-case/example
     rake spec:user:token    #run the first spec in user_spec.rb that matches /token/
     rake test:user:token    #run all tests in user_test.rb that match /token/
