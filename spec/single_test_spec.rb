@@ -34,6 +34,21 @@ describe SingleTest do
     it "does not split test name further" do
       SingleTest.parse_cli('test:something:else:oh:no')[2].should == 'else:oh:no'
     end
+
+    it "parses ClassNames" do
+      SingleTest.parse_cli('test:ClassNames')[1].should == 'class_names'
+    end
+
+    it "parses ClassNames::WithNamespaces" do
+      SingleTest.parse_cli('test:ClassNames::WithNamespaces')[1].should == 'class_names/with_namespaces'
+    end
+
+    it "doesn't confuse :s with ::s" do
+      parsed = SingleTest.parse_cli('test:ClassNames::WithNamespaces:foobar')
+      parsed[0].should == 'test'
+      parsed[1].should == 'class_names/with_namespaces'
+      parsed[2].should == 'foobar'
+    end
   end
 
   describe :find_test_file do
