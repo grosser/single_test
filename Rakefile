@@ -1,7 +1,5 @@
 task :default do
-  options = "--colour"
-  files = FileList['spec/**/*_spec.rb'].map{|f| f.sub(%r{^spec/},'') }
-  exec "cd spec && rspec #{options} #{files}"
+  exec "cd spec && rspec --colour single_test_spec.rb"
 end
 
 begin
