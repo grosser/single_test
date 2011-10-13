@@ -57,6 +57,7 @@ Authors
 ### [Contributors](http://github.com/grosser/single_test/contributors)
  - [Ian Young](https://github.com/iangreenleaf)
  - [Lorrin Nelson](https://github.com/lorrin)
+ - [Jason King](https://github.com/smathy)
 
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
