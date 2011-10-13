@@ -1,5 +1,4 @@
 require 'rake'
-require 'single_test/inflector'
 
 module SingleTest
   extend self
@@ -110,6 +109,18 @@ module SingleTest
   end
 
   private
+
+  # copied from Rails - so we're not dependent
+  def underscore(camel_cased_word)
+    word = camel_cased_word.to_s.dup
+    word.gsub!(/::/, '/')
+    word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+    word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+    word.tr!("-", "_")
+    word.downcase!
+    word
+  end
+
 
   def test_name_matcher(executable, file, test_name)
     if test_name and not executable.include?('rspec')
