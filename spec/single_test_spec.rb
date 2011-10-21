@@ -49,6 +49,16 @@ describe SingleTest do
       parsed[1].should == 'class_names/with_namespaces'
       parsed[2].should == 'foobar'
     end
+
+    it "doesn't mess with non-class names" do
+      parsed = SingleTest.parse_cli('test:ClassNames::WithNamespaces:FOOBAR')
+      parsed[2].should == 'FOOBAR'
+    end
+
+    it "doesn't mess with mixed case filenames" do
+      parsed = SingleTest.parse_cli('test:a/fileName/withMixedCase')
+      parsed[1].should == 'a/fileName/withMixedCase'
+    end
   end
 
   describe :find_test_file do
