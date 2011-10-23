@@ -49,10 +49,14 @@ module SingleTest
   # spec:user:blah --> [spec,user,blah]
   def parse_cli(call)
     raise "you should not have gotten here..." unless call =~ CMD_LINE_MATCHER
-    arguments = underscore(call).split(":",3)
+
+    # replace any ::s with /s for class names
+    call.gsub! /::/, '/'
+
+    arguments = call.split(":",3)
     [
       arguments[0], #type
-      arguments[1], #file name
+      class_to_filename(arguments[1]), # class or file name
       arguments[2].to_s.strip.empty? ? nil : arguments[2] #test name
     ]
   end
@@ -109,10 +113,11 @@ module SingleTest
 
   private
 
-  # copied from Rails - so we're not dependent
-  def underscore(camel_cased_word)
-    word = camel_cased_word.to_s.dup
-    word.gsub!(/::/, '/')
+  # converted from underscore to do a few more checks
+  def class_to_filename(suspect)
+    word = suspect.to_s.dup
+    return word unless word.match /^[A-Z]/ and not word.match %r{/[a-z]}
+
     word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
     word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
     word.tr!("-", "_")
