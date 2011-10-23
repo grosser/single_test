@@ -4,13 +4,13 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{single_test}
+  s.name = "single_test"
   s.version = "0.4.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Grosser"]
-  s.date = %q{2011-10-13}
-  s.email = %q{grosser.michael@gmail.com}
+  s.date = "2011-10-23"
+  s.email = "grosser.michael@gmail.com"
   s.files = [
     "Gemfile",
     "Gemfile.lock",
@@ -24,10 +24,10 @@ Gem::Specification.new do |s|
     "spec/single_test_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/grosser/single_test}
+  s.homepage = "http://github.com/grosser/single_test"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{Rake tasks to invoke single tests/specs with rakish syntax}
+  s.rubygems_version = "1.8.10"
+  s.summary = "Rake tasks to invoke single tests/specs with rakish syntax"
   s.test_files = [
     "spec/single_test_spec.rb",
     "spec/spec_helper.rb"
