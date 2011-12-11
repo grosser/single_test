@@ -50,8 +50,8 @@ module SingleTest
   def parse_cli(call)
     raise "you should not have gotten here..." unless call =~ CMD_LINE_MATCHER
 
-    # replace any ::s with /s for class names
-    call.gsub! /::/, '/'
+    # replace any :: with / for class names
+    call = call.gsub /::/, '/'
 
     arguments = call.split(":",3)
     [
