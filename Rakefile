@@ -1,5 +1,5 @@
 task :default do
-  exec "cd spec && rspec --colour single_test_spec.rb"
+  sh "rspec spec"
 end
 
 begin

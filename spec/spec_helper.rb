@@ -1,16 +1,18 @@
-# ---- requirements
 SPEC_ROOT = File.dirname(__FILE__)
 $LOAD_PATH << File.expand_path("../lib", SPEC_ROOT)
+require "single_test"
 
-# ---- rspec
+Dir.chdir(SPEC_ROOT)
+
 RSpec.configure do |config|
   config.before do
-    `mkdir -p #{SPEC_ROOT}/script`
-    `touch #{SPEC_ROOT}/script/spec`
+    `mkdir -p script`
+    `touch script/spec`
   end
+
   config.after do
-    `rm -rf #{SPEC_ROOT}/script`
-    `rm -rf #{SPEC_ROOT}/app`
-    `rm -rf #{SPEC_ROOT}/spec`
+    `rm -rf script`
+    `rm -rf app`
+    `rm -rf spec`
   end
 end

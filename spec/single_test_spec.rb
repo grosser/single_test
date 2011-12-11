@@ -1,5 +1,4 @@
 require "spec_helper"
-require "single_test"
 
 describe SingleTest do
   describe :parse_cli do
@@ -137,7 +136,7 @@ describe SingleTest do
     end
 
     it "runs another file when timestamps change" do
-      `touch -t 12312359 #{SPEC_ROOT}/app/yyy.rb` # last minute in current year, spec will fail on new years eve :D
+      `touch -t 12312359 app/yyy.rb` # last minute in current year, spec will fail on new years eve :D
       SingleTest.should_receive(:run_test).with(:spec, "spec/yyy_spec.rb")
       SingleTest.run_last(:spec)
     end
