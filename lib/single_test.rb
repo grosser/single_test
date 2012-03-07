@@ -2,8 +2,8 @@ require 'rake'
 
 module SingleTest
   extend self
+  include Rake::DSL
 
-  include Rake::DSL if defined? Rake::DSL # 0.8.7 does not have it
   CMD_LINE_MATCHER = /^(spec|test)\:.*(\:.*)?$/
 
   def load_tasks

@@ -22,5 +22,5 @@ PLATFORMS
 
 DEPENDENCIES
   jeweler
-  rake
+  rake (> 0.9)
   rspec (~> 2)
