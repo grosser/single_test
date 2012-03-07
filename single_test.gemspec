@@ -4,13 +4,13 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{single_test}
-  s.version = "0.4.4"
+  s.name = "single_test"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Grosser"]
-  s.date = %q{2011-12-11}
-  s.email = %q{grosser.michael@gmail.com}
+  s.date = "2012-03-07"
+  s.email = "grosser.michael@gmail.com"
   s.files = [
     "Gemfile",
     "Gemfile.lock",
@@ -24,18 +24,21 @@ Gem::Specification.new do |s|
     "spec/single_test_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/grosser/single_test}
+  s.homepage = "http://github.com/grosser/single_test"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{Rake tasks to invoke single tests/specs with rakish syntax}
+  s.rubygems_version = "1.8.15"
+  s.summary = "Rake tasks to invoke single tests/specs with rakish syntax"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<rake>, ["> 0.9"])
     else
+      s.add_dependency(%q<rake>, ["> 0.9"])
     end
   else
+    s.add_dependency(%q<rake>, ["> 0.9"])
   end
 end
 
