@@ -2,7 +2,6 @@ require 'rake'
 
 module SingleTest
   extend self
-  include Rake::DSL
 
   CMD_LINE_MATCHER = /^(spec|test)\:.*(\:.*)?$/
 
@@ -81,7 +80,7 @@ module SingleTest
 
   def run_test(type, file, test_name=nil)
     case type.to_s
-    when 'test' then sh "ruby -Ilib:test #{file} -n /#{test_name}/"
+    when 'test' then Rake.sh "ruby -Ilib:test #{file} -n /#{test_name}/"
     when 'spec' then
       executable = spec_executable
       options_file = "spec/spec.opts"
@@ -89,7 +88,7 @@ module SingleTest
       command = "export RAILS_ENV=test ; #{executable}#{options_file} #{file}"
       command += test_name_matcher(executable, file, test_name)
       command += " -X" if ENV['X'] # run via drb ?
-      sh command
+      Rake.sh command
     else raise "Unknown: #{type}"
     end
   end

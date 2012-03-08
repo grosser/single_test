@@ -156,63 +156,63 @@ describe SingleTest do
     end
 
     it "runs whole tests" do
-      SingleTest.should_receive(:sh).with('ruby -Ilib:test xxx -n //')
+      Rake.should_receive(:sh).with('ruby -Ilib:test xxx -n //')
       SingleTest.run_test('test','xxx')
     end
 
     it "runs single tests on their own" do
-      SingleTest.should_receive(:sh).with('ruby -Ilib:test xxx -n /yyy/')
+      Rake.should_receive(:sh).with('ruby -Ilib:test xxx -n /yyy/')
       SingleTest.run_test('test', 'xxx', 'yyy')
     end
 
     it "runs whole specs without -e" do
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec xxx')
+      Rake.should_receive(:sh).with('export RAILS_ENV=test ; script/spec xxx')
       SingleTest.run_test('spec','xxx')
     end
 
     it "runs all matching specs through -e for rspec 2" do
       File.should_receive(:file?).with('script/spec').and_return false
       File.stub!(:readlines).and_return ['it "bla yyy" do']
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; bundle exec rspec xxx -e "yyy"')
+      Rake.should_receive(:sh).with('export RAILS_ENV=test ; bundle exec rspec xxx -e "yyy"')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs full single specs through -e for rspec 1" do
       File.stub!(:readlines).and_return ['it "bla yyy" do']
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec xxx -e "bla yyy"')
+      Rake.should_receive(:sh).with('export RAILS_ENV=test ; script/spec xxx -e "bla yyy"')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs single specs through -e with -X" do
       File.stub!(:readlines).and_return []
       ENV['X']=''
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec xxx -e "yyy" -X')
+      Rake.should_receive(:sh).with('export RAILS_ENV=test ; script/spec xxx -e "yyy" -X')
       SingleTest.run_test('spec','xxx', 'yyy')
     end
 
     it "runs quoted specs though -e" do
       File.stub!(:readlines).and_return []
-      SingleTest.should_receive(:sh).with(%Q(export RAILS_ENV=test ; script/spec xxx -e "y\\\"yy"))
+      Rake.should_receive(:sh).with(%Q(export RAILS_ENV=test ; script/spec xxx -e "y\\\"yy"))
       SingleTest.run_test('spec','xxx', 'y"yy')
     end
 
     it "adds --options if spec.opts file exists" do
       File.stub!(:exist?).and_return true
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; script/spec --options spec/spec.opts xxx')
+      Rake.should_receive(:sh).with('export RAILS_ENV=test ; script/spec --options spec/spec.opts xxx')
       SingleTest.run_test('spec','xxx')
     end
 
     it "runs with bundled spec if script/spec is not found" do
       File.stub!(:file?).and_return false
       File.should_receive(:file?).with('script/spec').and_return false
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; bundle exec rspec xxx')
+      Rake.should_receive(:sh).with('export RAILS_ENV=test ; bundle exec rspec xxx')
       SingleTest.run_test('spec','xxx')
     end
 
     it "uses bundler if Gemfile is present" do
       File.stub!(:file?).and_return false
       SingleTest.should_receive(:bundler_enabled?).and_return true
-      SingleTest.should_receive(:sh).with('export RAILS_ENV=test ; bundle exec rspec xxx')
+      Rake.should_receive(:sh).with('export RAILS_ENV=test ; bundle exec rspec xxx')
       SingleTest.run_test('spec','xxx')
     end
   end
