@@ -47,7 +47,7 @@ Searches for test-files by class (Foo::Bar -> foo/bar)
 
 TIPS
 ====
- - if `script/spec` is missing, if will use just `spec` for specs (which solves some issues)
+ - if `script/spec` is missing, it will use just `spec` for specs (which solves some issues)
  - run whole describe blocks: `describe 'xxx' do describe 'yyy'` --> `rake spec:file:'xxx yyy'`
  - run single examples or describe blocks via line-numbers `rspec spec/foo_spec:123`
 
