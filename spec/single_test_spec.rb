@@ -156,7 +156,7 @@ describe SingleTest do
     end
 
     it "runs whole tests" do
-      Rake.should_receive(:sh).with('ruby -Ilib:test xxx -n //')
+      Rake.should_receive(:sh).with('ruby -Ilib:test xxx')
       SingleTest.run_test('test','xxx')
     end
 
