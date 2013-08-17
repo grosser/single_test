@@ -1,6 +1,6 @@
-source :rubygems
+source "https://rubygems.org"
 
-gem 'rake', '>0.9'
+gem 'rake'
 
 group :dev do
   gem 'jeweler'
