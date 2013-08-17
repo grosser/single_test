@@ -2,18 +2,16 @@ Runs a single test/spec via rake.
 
 INSTALLATION
 =====
-###As Rails plugin
 
-    script/plugin install git://github.com/grosser/single_test.git
-
-###As Gem
-
-    sudo gem install single_test
+```Bash
+sudo gem install single_test
+```
 
 Include in your Rakefile:
 
-    require 'single_test'
-    SingleTest.load_tasks
+```Ruby
+require 'single_test/tasks'
+```
 
 USAGE
 =====
@@ -65,4 +63,6 @@ Authors
 
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
-Hereby placed under public domain, do what you want, just do not hold me accountable...
+License: MIT
+[![Build Status](https://travis-ci.org/grosser/single_test.png)](https://travis-ci.org/grosser/single_test)
+

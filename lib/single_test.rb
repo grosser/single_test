@@ -6,7 +6,7 @@ module SingleTest
   CMD_LINE_MATCHER = /^(spec|test)\:.*(\:.*)?$/
 
   def load_tasks
-    load File.join(File.dirname(__FILE__), 'tasks', 'single_test.rake')
+    raise "replace this line with require 'single_test/tasks'"
   end
 
   def run_last(type)

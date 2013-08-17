@@ -1,8 +1,6 @@
 source "https://rubygems.org"
 
-gem 'rake'
+gemspec
 
-group :dev do
-  gem 'jeweler'
-  gem 'rspec', '~>2'
-end
+gem "bump"
+gem "rspec"
