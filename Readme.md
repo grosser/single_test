@@ -39,7 +39,7 @@ Searches for test-files by class (Foo::Bar -> foo/bar)
     rake spec:one_by_one    #run each spec/test one by one, to find tests that fail when ran
     rake test:one_by_one    #on their own or produce strange output
 
-###For last mofified file
+###For last modified file
     rake test:last
     rake spec:last
 
