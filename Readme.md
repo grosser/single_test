@@ -16,7 +16,7 @@ require 'single_test/tasks'
 USAGE
 =====
 
-###Single test/spec
+### Single test/spec
 Searches for test-files matching the given name.
 
     rake spec:user          #run spec/model/user_spec.rb
@@ -28,18 +28,18 @@ Searches for test-files by class (Foo::Bar -> foo/bar)
 
     rake spec:Foo::Bar #run spec/foo/bar_spec.rb
 
-###Single test-case/example
+### Single test-case/example
     rake spec:user:token    #run the first spec in user_spec.rb that matches /token/
     rake test:user:token    #run all tests in user_test.rb that match /token/
 
-###Spec-server
+### Spec-server
     rake spec:user X=       #run test on spec_sever (if one is running...), very fast for quick failure pin-pointing
 
-###All one by one
+### All one by one
     rake spec:one_by_one    #run each spec/test one by one, to find tests that fail when ran
     rake test:one_by_one    #on their own or produce strange output
 
-###For last modified file
+### For last modified file
     rake test:last
     rake spec:last
 
